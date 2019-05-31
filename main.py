@@ -36,14 +36,15 @@ subMenu.add_command(label="About Us", command=about_us)
 
 
 root.title("Melody Music Player")
-root.geometry("300x300")
+
+# root.geometry("300x300")
 if "nt" == os.name:
     root.iconbitmap(bitmap=r"melody.ico")
 else:
     root.iconbitmap(bitmap=r"@music-player.xbm")
 
 text = Label(root, text="Lets make some noise")
-text.pack()
+text.pack(pady=10)
 
 
 # labelphoto = Label(root, image=photo)
@@ -86,22 +87,37 @@ def pause_music():
     statusbar['text'] = "Music paused"
 
 
+def rewind_music():
+    play_music()
+    statusbar['text'] = "Music rewinded"
+
+
+middleFRame = Frame(root)
+middleFRame.pack(padx=30, pady=30)
+
 playPhoto = PhotoImage(file=r"images/play.png")
-playBtn = Button(root, image=playPhoto, command=play_music)
-playBtn.pack()
+playBtn = Button(middleFRame, image=playPhoto, command=play_music)
+playBtn.grid(row=0, column=0, padx=10)
 
 stopPhoto = PhotoImage(file=r"images/stop.png")
-stopBtn = Button(root, image=stopPhoto, command=stop_music)
-stopBtn.pack()
+stopBtn = Button(middleFRame, image=stopPhoto, command=stop_music)
+stopBtn.grid(row=0, column=1, padx=10)
 
 pausePhoto = PhotoImage(file=r"images/pause.png")
-pauseBtn = Button(root, image=pausePhoto, command=pause_music)
-pauseBtn.pack()
+pauseBtn = Button(middleFRame, image=pausePhoto, command=pause_music)
+pauseBtn.grid(row=0, column=2, padx=10)
 
-scale = Scale(root, to=100, orient=HORIZONTAL, command=set_vol)
+bottomFrame = Frame(root)
+bottomFrame.pack()
+
+rewindPhoto = PhotoImage(file=r"images/rewind.png")
+rewindBtn = Button(bottomFrame, image=rewindPhoto, command=rewind_music)
+rewindBtn.grid(row=0, column=0)
+
+scale = Scale(bottomFrame, to=100, orient=HORIZONTAL, command=set_vol)
 scale.set(70)
 mixer.music.set_volume(0.7)
-scale.pack()
+scale.grid(row=0, column=1, padx=30)
 
 statusbar = Label(root, text="Welcome to Melody", relief=SUNKEN, anchor=W)
 statusbar.pack(side=BOTTOM, fill=X)
