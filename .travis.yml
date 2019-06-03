@@ -1,6 +1,6 @@
 language: python
 install:
-  - pip install tkinter
-  - pip install pygame
+  - apt-get install python-tk
+  - apt-get install python-pygame
 script:
   - py.test
